@@ -1,0 +1,5 @@
+# This directory is a Syncthing folder marker.
+# Do not delete.
+
+folderID: 807sp-bq44m
+created: 2026-03-18T20:34:08+08:00
