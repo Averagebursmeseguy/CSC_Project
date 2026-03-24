@@ -10,7 +10,6 @@ screen = pygame.display.set_mode((800, 600))
 running = True
 rocket = pygame.image.load("./assets/placeholder_rocket.png").convert_alpha()
 
-
 print(map_utils.centreFinder(screen))
 
 while running:
@@ -20,7 +19,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    map_utils.drawGrid((100, 100), (700, 700), 50, screen, (255, 255, 255))
+    map_utils.drawGrid(map_utils.centreFinder(screen), screen)
     
     # pygame.draw.line(screen, (255, 255, 255), (100, 100), (700, 100), 1)
     # pygame.draw.line(screen, (255, 255, 255), (100, 100), (100, 700), 1)
