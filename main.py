@@ -3,8 +3,12 @@ import pygame
 import random
 import map_utils
 
-pygame.init()
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+GREEN = (0, 255, 0)
 
+pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
 running = True
@@ -19,7 +23,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    map_utils.drawGrid(screen, 100)
+    map_utils.drawGrid(screen, 50, RED)
     
     # pygame.draw.line(screen, (255, 255, 255), (100, 100), (700, 100), 1)
     # pygame.draw.line(screen, (255, 255, 255), (100, 100), (100, 700), 1)
