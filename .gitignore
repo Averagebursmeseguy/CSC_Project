@@ -2,7 +2,7 @@
 .venv/
 
 # ignore syncthing anchor
-assets/.stfolder/
+.stfolder
 
 #Ignore the precompiled bytcode file
 __pycache__/
