@@ -11,18 +11,17 @@ def drawGrid(screen: pygame.display, spacing: int, color: tuple[int, int, int]):
     pygame.draw.line(screen, color, (centre[0], 0), (centre[0], screen.height))
     pygame.draw.line(screen, color, (0, centre[1]), (screen.width, centre[1]))
 
-    #establish bounding boxes
+    #establish bounding box
     pygame.draw.rect(screen, color, (0, 0, screen.width, screen.height), 1)
 
     #subdivide
-    increment = spacing
     (endx, endy) = (screen.width, screen.height)
 
-    for i in range(0, endx):
-        pygame.draw.line(screen, color, (0, increment*i), (endx, increment*i))
+    for y in range(0, endy, spacing): 
+        pygame.draw.line(screen, color, (0, y), (endx, y))
 
-    for i in range(0, endy):
-        pygame.draw.line(screen, color, (increment*i, 0), (increment * i, endy))
+    for x in range(0, endx, spacing):
+        pygame.draw.line(screen, color, (x, 0), (x, endy))
 
 
 
