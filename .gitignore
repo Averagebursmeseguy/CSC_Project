@@ -1,0 +1,9 @@
+#Ignore custom venv shit
+.venv/
+
+# ignore syncthing anchor
+.stfolder
+
+#Ignore the precompiled bytcode file
+__pycache__/
+*.pyc

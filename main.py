@@ -1,33 +1,27 @@
 import tkinter
 import pygame
-import random
+import map_utils
+
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+GREEN = (0, 255, 0)
 
 pygame.init()
-
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((500, 600))
 
 running = True
-rocket = pygame.image.load("./assets/placeholder_rocket.png")
+rocket = pygame.image.load("./assets/placeholder_rocket.png").convert_alpha()
 
-y = 600
-random_coords = random.choice([200, 500, 300, 400, 700, 800])
+print(map_utils.centreFinder(screen))
 
 while running:
 
-    screen.fill((20, 20, 20))
-    
+    screen.fill((0, 0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    if y > 0:
-        y -= 1
-    else:
-        y = 600
-        random_coords = random.choice([200, 500, 300, 400, 700, 800])
-
-    print(y)
-    screen.blit(rocket, (random_coords, y))
-
+    map_utils.drawGrid(screen, 50, WHITE)
     pygame.display.flip() #renders all the sprites and displays them in window. Don't fuck with this one.
 pygame.quit()
