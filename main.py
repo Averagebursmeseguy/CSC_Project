@@ -19,7 +19,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    map_utils.drawGrid(map_utils.centreFinder(screen), screen)
+    map_utils.drawGrid(screen)
     
     # pygame.draw.line(screen, (255, 255, 255), (100, 100), (700, 100), 1)
     # pygame.draw.line(screen, (255, 255, 255), (100, 100), (100, 700), 1)

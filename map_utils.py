@@ -4,9 +4,18 @@ def centreFinder(display_object: pygame.display):
     centre = (display_object.width / 2, display_object.height / 2)
     return centre
 
-def drawGrid(centre: tuple[int, int], surface: pygame.display):
-    pygame.draw.line(surface, (255, 255, 255), (centre[0], 0), (centre[0], 600))
-    pygame.draw.line(surface, (255, 255, 255), (0, centre[1]), (800, centre[1]))
+def drawGrid(surface: pygame.display):
+    centre = centreFinder(surface) #Pretty self-explaintory
+
+    #establish centre lines first
+    pygame.draw.line(surface, (255, 255, 255), (centre[0], 0), (centre[0], surface.height))
+    pygame.draw.line(surface, (255, 255, 255), (0, centre[1]), (surface.width, centre[1]))
+
+    #establish bounding boxes
+    pygame.draw.rect(surface, (255, 255, 255), (0, 0, surface.width, surface.height), 1)
+
+    #subdivide
+    
 
 
 # def drawGrid(startpos, endpos, scaling, surface, linecolor):
