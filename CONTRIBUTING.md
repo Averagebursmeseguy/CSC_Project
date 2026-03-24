@@ -7,6 +7,7 @@ Fork > clone > submit pull request
 - Use PEP-8 lah
 - Camel case for functions lah
 - Use type hints for args lah
+- Snake case for .py file names lah
 
 # What each .py does:
 
