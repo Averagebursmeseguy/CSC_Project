@@ -1,6 +1,5 @@
 # Welcome to AstroNav
- Welcome aboard Navigator. Your guidance shall leave us to victory.
- -# or at least not get slammed into the side of an asteroid. idk.
+ Welcome aboard Navigator. Your guidance shall leave us to victory. Or at least not get slammed into the side of an asteroid. idk.
 
 ## What is the game about?
  Comp Sci project, indie game and endless time sink all in one. This game (hopefully) teaches you how to think in code. 
@@ -18,19 +17,19 @@
  - Phase 1 : refinement to basic functions
  - Phase 2 : UI elements
 
-# Troubleshooting/setup steps:
+# setup steps:
  - after cloning the repo, be sure to run
 
  ```bash
  pip install -r requirements.txt
  ```
 
+# troubleshooting:
+ little bare right now, will add more as issues pop up
 
-
- Little Bare right now... Will add more as issues pop up
-
- ## obvious stuff:
+# obvious stuff:
  - entry point is main.py
+ - Use a .venv for best results and to ensure no package conflicts
  - main.py and scripts have to be in the same folder
 
 
