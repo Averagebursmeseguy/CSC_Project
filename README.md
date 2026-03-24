@@ -19,6 +19,14 @@
  - Phase 2 : UI elements
 
 # Troubleshooting/setup steps:
+ - after cloning the repo, be sure to run
+
+ ```bash
+ pip install -r requirements.txt
+ ```
+
+
+
  Little Bare right now... Will add more as issues pop up
 
  ## obvious stuff:
