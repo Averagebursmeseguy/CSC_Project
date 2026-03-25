@@ -9,6 +9,10 @@ Fork > clone > submit pull request
 - Use type hints for args lah
 - Snake case for .py file names lah
 
+# Asset conventions:
+ - Sprites meant to fit in the grid must always be 256x256 px
+ - Sprite backgrounds must also be transparent
+
 # What each .py does:
 
  - main.py is where the main game loop is stored. Only put event listeners and high level utility calls here

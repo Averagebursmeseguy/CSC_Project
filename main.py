@@ -1,4 +1,3 @@
-import tkinter
 import pygame
 import map_utils
 
@@ -8,10 +7,9 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 
 pygame.init()
-screen = pygame.display.set_mode((500, 600))
-
+screen = pygame.display.set_mode((800, 800))
+gridSize = 50
 running = True
-rocket = pygame.image.load("./assets/placeholder_rocket.png").convert_alpha()
 
 print(map_utils.centreFinder(screen))
 
@@ -22,6 +20,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    map_utils.drawGrid(screen, 50, WHITE)
+    map_utils.drawGrid(screen, gridSize, WHITE)
+
     pygame.display.flip() #renders all the sprites and displays them in window. Don't fuck with this one.
 pygame.quit()
