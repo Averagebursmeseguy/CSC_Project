@@ -11,7 +11,13 @@ screen = pygame.display.set_mode((800, 800))
 gridSize = 50
 running = True
 
-print(map_utils.centreFinder(screen))
+
+#Testing RocketLang implementation
+with open("lang.txt", "r") as lang:
+    instructions = lang.readlines()
+
+for instruction in instructions:
+    print(instruction)
 
 while running:
 
