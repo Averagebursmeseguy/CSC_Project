@@ -1,4 +1,5 @@
 import pygame
+import random
 
 def centreFinder(display_object: pygame.display):
     centre = (display_object.width / 2, display_object.height / 2)
@@ -24,23 +25,33 @@ def drawGrid(screen: pygame.display, spacing: int, color: tuple[int, int, int]):
         pygame.draw.line(screen, color, (x, 0), (x, endy))
 
 
+#TODO: Dedupe me you fuck
+def generateObstacles(terrain, obstacleSize:int, rootCoord: tuple|int):
+    oldPoint = [rootCoord[0], rootCoord[1]]
+    points = []
+    locations = []
 
+    #This generates the points
+    for i in range(1, obstacleSize):
+        dir = random.randint(0, 2)
+        match dir:
+            case 0:         
+                newPoint = [oldPoint[0] + 1, oldPoint[1]]
+                oldPoint = newPoint
+            case 1:
+                newPoint = [oldPoint[0], oldPoint[1] + 1]
+                oldPoint = newPoint
+            case 2:
+                newPoint = [oldPoint[0], oldPoint[1] - 1]
+                oldPoint = newPoint
+        points.append(newPoint)
 
-# def drawGrid(startpos, endpos, scaling, screen, linecolor):
+    print(points)
 
-#     startx, starty = startpos
-#     endx, endy = endpos
+    #This thing stitches the texture and point together
+    for point in points:
+        locations.append([terrain, (point[0], point[1])])
 
-#     #Make vertical and horiz lines first
-#     pygame.draw.line(screen, linecolor, (startx, starty), (endx, starty), 1)
-#     pygame.draw.line(screen, linecolor, (startx, starty), (startx, endy), 1)
-#     pygame.draw.line(screen, linecolor, (endx, endy), (startx, endy), 1)
-#     pygame.draw.line(screen, linecolor, (endx, endy), (endx, starty), 1)
-
-#     for i in range(int(endx / scaling)):
-#         increment = startx + (scaling * i)
-#         pygame.draw.line(screen, linecolor, (increment, starty), (increment, endy))
-
-#     for i in range(int(endy / scaling)):
-#         increment = starty + (scaling * i)
-#         pygame.draw.line(screen, linecolor, (startx, increment), (endx, increment))
+    print(locations)
+    return locations
+            
