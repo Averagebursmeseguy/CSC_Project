@@ -1,5 +1,5 @@
 # Welcome to AstroNav
- Welcome aboard Navigator. Your guidance shall leave us to victory. Or at least not get slammed into the side of an asteroid. idk.
+ Welcome aboard Navigator. Your guidance shall lead us to victory. Or at least not get slammed into the side of an asteroid. idk.
 
 ## What is the game about?
  Comp Sci project, indie game and endless time sink all in one. This game (hopefully) teaches you how to think in code. 
