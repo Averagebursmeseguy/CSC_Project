@@ -7,3 +7,6 @@
 #Ignore the precompiled bytcode file
 __pycache__/
 *.pyc
+
+#Whoops, looks like we're not using that anymore
+map_utils.py
