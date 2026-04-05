@@ -1,17 +1,7 @@
 import pygame
 import random
 
-def centreFinder(display_object: pygame.display):
-    centre = (display_object.width / 2, display_object.height / 2)
-    return centre
-
 def drawGrid(screen: pygame.display, spacing: int, color: tuple[int, int, int]): #Spacing gets fucking weird when doing things that are not 10^x. 
-    centre = centreFinder(screen) #Pretty self-explaintory
-
-    #establish centre lines first
-    pygame.draw.line(screen, color, (centre[0], 0), (centre[0], screen.height))
-    pygame.draw.line(screen, color, (0, centre[1]), (screen.width, centre[1]))
-
     #establish bounding box
     pygame.draw.rect(screen, color, (0, 0, screen.width, screen.height), 1)
 
@@ -25,14 +15,15 @@ def drawGrid(screen: pygame.display, spacing: int, color: tuple[int, int, int]):
         pygame.draw.line(screen, color, (x, 0), (x, endy))
 
 
-#TODO: Dedupe me you fuck
+#TODO: Algorithm needs polish
 def generateObstacles(terrain, obstacleSize:int, rootCoord: tuple|int):
     oldPoint = [rootCoord[0], rootCoord[1]]
     points = []
     locations = []
 
     #This generates the points
-    for i in range(1, obstacleSize):
+    i = 0
+    while i < obstacleSize:
         dir = random.randint(0, 2)
         match dir:
             case 0:         
@@ -44,14 +35,28 @@ def generateObstacles(terrain, obstacleSize:int, rootCoord: tuple|int):
             case 2:
                 newPoint = [oldPoint[0], oldPoint[1] - 1]
                 oldPoint = newPoint
-        points.append(newPoint)
+        
+        if newPoint not in points:
+             points.append(newPoint)
+             i += 1
+        else:
+            pass
 
-    print(points)
 
     #This thing stitches the texture and point together
     for point in points:
         locations.append([terrain, (point[0], point[1])])
 
-    print(locations)
     return locations
+
+def generateMap(count, terrain):
+    obstacleList = []
+    i = 0
+    while i < count:
+        obstacle = generateObstacles(terrain, 7, (random.randint(i , 20), random.randint(i, 20)))
+        if obstacle not in obstacleList:
+            obstacleList.append(obstacle)
+            i += 1
+        
+    return obstacleList
             
