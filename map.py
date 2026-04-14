@@ -8,6 +8,7 @@ class Map():
         self.coords = {}
         self.terrain_piece = pygame.image.load('assets/terrain.png').convert_alpha()
         self.screen = screen
+        self.scaling = 0
 
         for y in range(self.size):
             for x in range(self.size):
@@ -47,7 +48,8 @@ class Map():
                 visitedLocations.append(newCoord)
 
         for location in visitedLocations:
-            self.makeDebris(location)   
+            self.makeDebris(location) 
+
 
         
     def drawMap(self):
@@ -55,20 +57,19 @@ class Map():
         viewWidth, viewHeight = mapViewPort.width, mapViewPort.height
         mapViewPort.fill((0, 0, 20))
 
-        scaling = viewWidth // self.size
+        self.scaling = viewWidth // self.size
 
-        for x in range(0, viewWidth, scaling):
+        for x in range(0, viewWidth, self.scaling):
             pygame.draw.line(mapViewPort, (255, 255, 255), (x, 0), (x, viewHeight))
 
-        for y in range(0, viewHeight, scaling):
+        for y in range(0, viewHeight, self.scaling):
             pygame.draw.line(mapViewPort, (255, 255, 255), (0, y), (viewWidth, y))
 
         pygame.draw.rect(mapViewPort, (255, 255, 255), (0, 0, viewWidth, viewHeight), 1)
-        print(mapViewPort.get_size())
 
         for point in self.coords:
             if self.coords[point] == "terrain":
-                mapViewPort.blit(pygame.transform.scale(self.terrain_piece, (scaling, scaling)), (point[0]*scaling, point[1]*scaling))
+                mapViewPort.blit(pygame.transform.scale(self.terrain_piece, (self.scaling, self.scaling)), (point[0]*self.scaling, point[1]*self.scaling))
 
         self.screen.blit(mapViewPort, ((self.screen.width - mapViewPort.width) - 20 , 20))
 
