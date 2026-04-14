@@ -90,7 +90,7 @@ let's say you want to check collision or something and want to see if a *terrain
  - *terrain_piece* stores each of the terrain textures that will be made into debri and scattered around the map as obstacles.
  - *density* is information about how many pieces of debris should be present at all time
  - *debriSize* is how big (in terrain textures) will each piece of debris be
- Each debris object is randomly generated based on debriSize and scattered using density.
+ - Each debris object is randomly generated based on debriSize and scattered using density.
 
 ### Part - 4 Known limitations:
 Yes I know that
@@ -98,4 +98,5 @@ Yes I know that
  - The map is redrawn every frame
  - There's no bounding checks on coords
  - Scaled textures are not cached
+
 This is a minimal viable product for the time being, so I'm just getting it to work first.
