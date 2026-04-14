@@ -24,3 +24,4 @@ Fork > clone > submit pull request
 # obvious stuff:
  - all images go into the assets folder
  - To prevent fucky shit from happening, please refrain from using anything that's not a .png in the game assets
+ - If you add a new script, write documentation about it in a .md file about how it works, how to use it and what are its limitations.
