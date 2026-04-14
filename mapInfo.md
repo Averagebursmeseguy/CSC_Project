@@ -31,7 +31,7 @@ The "truth table" aspect of the map. This is a dictionary that contains a tuple 
 ### Screen
 This is the Pygame.Screen object that the Map() object puts its render pipeline into where the renderer converts the truth table coordinates to actual screen code. Check following for more info.
 
-## Part - 2 the renderer:
+## Part - 2 The renderer:
 The map renderer converts the coords dict stored in Map() to actual screen codes and paints the screen. ~~I wrote this at 3 in the morning and half of its operations involve copious amounts of caffeine, black magic and wondering why I chose to do CS voluntarily.~~ DO NOT MODIFY
 
 ### How it works
@@ -89,5 +89,13 @@ let's say you want to check collision or something and want to see if a *terrain
 #### What the other attributes of Map() do:
  - *terrain_piece* stores each of the terrain textures that will be made into debri and scattered around the map as obstacles.
  - *density* is information about how many pieces of debris should be present at all time
- - *debrisSize* is how big (in terrain textures) will each piece of debris be
- Each debris object is randomly generated based on debrisSize and scattered using density.
+ - *debriSize* is how big (in terrain textures) will each piece of debris be
+ Each debris object is randomly generated based on debriSize and scattered using density.
+
+### Part - 4 Known limitations:
+Yes I know that
+ - The map cannot be anything but a square
+ - The map is redrawn every frame
+ - There's no bounding checks on coords
+ - Scaled textures are not cached
+This is a minimal viable product for the time being, so I'm just getting it to work first.
