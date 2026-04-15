@@ -10,9 +10,10 @@ class Map():
         self.screen = screen
         self.scaling = 0
 
-        for y in range(self.size):
-            for x in range(self.size):
-                self.coords[(x, y)] = None
+        for y in range(self.size + 1):
+            for x in range(self.size + 1):
+                self.coords[(x, y)] = {'terrain': None, "point": (x, y)}
+        
 
     def makeDebris(self, root:tuple[int, int]):
         i = 0
@@ -36,21 +37,18 @@ class Map():
                 i += 1
 
         for point in points:
-            self.coords[point] = 'terrain'
+            try:
+                self.coords[point]['terrain'] = 'terrain'
+            except:
+                KeyError
+                pass
 
     def scatterDebris(self):
-        visitedLocations = []
+        visitedLocations = random.sample(list(self.coords), self.density)
         i = 0
-        while i < self.density:
-            newCoord = (random.randint(0, self.size), random.randint(0, self.size))
-            if newCoord not in visitedLocations:
-                i += 1
-                visitedLocations.append(newCoord)
 
         for location in visitedLocations:
             self.makeDebris(location) 
-
-
         
     def drawMap(self):
         mapViewPort = pygame.Surface((self.screen.height * 0.9, self.screen.height * 0.9))
@@ -68,7 +66,7 @@ class Map():
         pygame.draw.rect(mapViewPort, (255, 255, 255), (0, 0, viewWidth, viewHeight), 1)
 
         for point in self.coords:
-            if self.coords[point] == "terrain":
+            if self.coords[point]["terrain"] == "terrain":
                 mapViewPort.blit(pygame.transform.scale(self.terrain_piece, (self.scaling, self.scaling)), (point[0]*self.scaling, point[1]*self.scaling))
 
         self.screen.blit(mapViewPort, ((self.screen.width - mapViewPort.width) - 20 , 20))

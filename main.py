@@ -3,6 +3,7 @@
 import pygame
 import pygame_gui
 import map
+import rocket
 
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -23,8 +24,9 @@ button = pygame_gui.elements.UIButton(
 
 running = True
 
-gameMap = map.Map(15, 2, 50, screen)
+gameMap = map.Map(15, 2, 40, screen)
 gameMap.scatterDebris()
+player = rocket.Rocket('./assets/placeholder_rocket.png',(0, 0) , gameMap)
 
 while running:
     time_delta = clock.tick(60) / 1000.0
@@ -47,5 +49,6 @@ while running:
     manager.update(time_delta)
     manager.draw_ui(screen)
     gameMap.drawMap()
+    player.draw()
     pygame.display.flip() #renders all the sprites and displays them in window. Don't fuck with this one.
 pygame.quit()
