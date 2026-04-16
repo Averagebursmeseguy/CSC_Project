@@ -16,7 +16,7 @@ gameMap = map.Map(15, 2, 40, screen)
 gameMap.scatterDebris()
 player = rocket.Rocket('./assets/placeholder_rocket.png',(0, 0) , gameMap)
 
-saveButton = pygame_gui.elements.UIButton(
+validateButton = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect(0,0, 100, 50),
     text=("Check code"),
     manager=manager,
@@ -54,8 +54,9 @@ while running:
             rocketLangterminal.set_relative_position((0, event.h * 0.7))
 
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == saveButton:
-                print('button pressed')
+            if event.ui_element == validateButton:
+                commands = player.parseRL(codeEntryWindow.get_text())
+                print(player.validateRL(commands))
         
         manager.process_events(event)
     
@@ -63,8 +64,7 @@ while running:
     manager.update(time_delta)
     manager.draw_ui(screen)
     gameMap.drawMap()
-    player.move("down", 6)
-    player.move("forward", 2)
     player.draw()
     pygame.display.flip() #renders all the sprites and displays them in window. Don't fuck with this one.
+
 pygame.quit()

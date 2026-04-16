@@ -1,5 +1,4 @@
 import pygame
-
 class Rocket:
     def __init__(self, image_path, grid_pos, gameMap):
         self.image = pygame.image.load(image_path).convert_alpha()
@@ -7,9 +6,56 @@ class Rocket:
         self.gameMap = gameMap
         # if starting cell is terrain, find a free one
         if self.gameMap.coords.get(tuple(self.grid_pos)) == "terrain":
-            self.grid_pos = self.find_empty(gameMap)
+            self.grid_pos = self.findEmpty(gameMap)
 
-    def find_empty(self):
+    def parseRL(self, raw):
+        commands = raw.split("\n")
+        def parseAgain(command):
+            commandList = command.split(' ')
+            name = commandList.pop(0)
+            return {"name": name, "args": commandList}
+        return list(map(parseAgain, commands))
+    
+    def validateRL(self, commandList:list[dict]):
+        errorList = []
+        for i, command in enumerate(commandList):
+            line = i+1
+            match command['name']:
+                case 'move':
+                    args = command['args']
+                    if len(args) != 2:
+                        errorList.append(f'Error: line:{line}: move has 2 args, got {len(args)}.')
+                    elif args[-1].isdecimal() == False:
+                        errorList.append(f'Error: line{line}: distance must be a number')
+                    elif args[0] not in ['forward', 'backward', 'up', 'down']:
+                        errorList.append(f'Error: line{line}: unrecognised direction. Can only go forward, backward, up, down.')
+
+                case 'shoot':
+                    if len(args) != 1:
+                        errorList.append(f'Error: line{line}: Must specify direction')
+                    elif args[-1] not in ['forward', 'backward', 'up', 'down']:
+                        errorList.append(f'Error: line{line}: cannot shoot in that direction')
+
+                case _:
+                    errorList.append(f'Error: line{line}: Unknown command')
+        return errorList
+    
+    def executeRL(self, commandList:list[dict]):
+        errorList = self.validateRL(commandList)
+
+        if len(errorList) != 0:
+            print(*errorList)
+        else:
+            pass
+                
+
+    def checkCollision(self):
+        if self.gameMap.coords[tuple(self.grid_pos)]['terrain'] == "terrain":
+            return True
+        else:
+            return False
+
+    def findEmpty(self):
         for y in range(self.gameMap.size):
             for x in range(self.gameMap.size):
                 if self.gameMap.coords.get((x, y)) != "terrain":
