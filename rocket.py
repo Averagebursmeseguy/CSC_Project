@@ -16,10 +16,20 @@ class Rocket:
                     return [x, y]
         return [0, 0]  # fallback
 
-    def move(self, map_size):
-        # simple test movement (diagonal loop)
-        self.grid_pos[0] = (self.grid_pos[0] + 1) % map_size
-        self.grid_pos[1] = (self.grid_pos[1] + 1) % map_size
+    def move(self, dir:str, distance:int):
+        dirs = ['forward', 'backward', 'up', 'down']
+        if dir not in dirs:
+            pass
+        else:
+            match dir:
+                case 'forward':
+                    self.grid_pos[0] = (self.grid_pos[0] + distance) % self.gameMap.size
+                case 'backward':
+                    self.grid_pos[0] = (self.grid_pos[0] - distance) % self.gameMap.size
+                case 'up':
+                    self.grid_pos[1] = (self.grid_pos[1] - distance) % self.gameMap.size
+                case 'down':
+                    self.grid_pos[1] = (self.grid_pos[1] + distance) % self.gameMap.size
 
     def draw(self):
         view_size = int(self.gameMap.screen.get_height() * 0.9)
