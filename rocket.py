@@ -31,8 +31,9 @@ class Rocket:
                         errorList.append(f'Error: line{line}: unrecognised direction. Can only go forward, backward, up, down.')
 
                 case 'shoot':
+                    args = command['args']
                     if len(args) != 1:
-                        errorList.append(f'Error: line{line}: Must specify direction')
+                        errorList.append(f'Error: line{line}: No direction.')
                     elif args[-1] not in ['forward', 'backward', 'up', 'down']:
                         errorList.append(f'Error: line{line}: cannot shoot in that direction')
 
@@ -44,7 +45,7 @@ class Rocket:
         errorList = self.validateRL(commandList)
 
         if len(errorList) != 0:
-            print(*errorList)
+            return errorList
         else:
             pass
                 

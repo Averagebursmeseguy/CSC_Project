@@ -56,8 +56,14 @@ while running:
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
             if event.ui_element == validateButton:
                 commands = player.parseRL(codeEntryWindow.get_text())
-                print(player.validateRL(commands))
-        
+                errors = player.validateRL(commands)
+                if errors != []:
+                    rocketLangterminal.set_text(f"<p><font color=#FF0000>{'\n'.join(errors)}</font></p>")
+                else:
+                    rocketLangterminal.set_text(f"<p><font color=#00FF00>Code executed successfully</font")
+
+            elif event.ui_element == runButton:
+                print("run")
         manager.process_events(event)
     
     
