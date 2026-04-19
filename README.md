@@ -10,8 +10,8 @@
 ## Development roadmap(subject to DRASTIC changes):
  - Phase 0 : establish basic functions
     - map/obstacle generation 
-    - player character modelling (we are here)
-    - target location
+    - player character modelling 
+    - target location (We are here)
     - syntax for *RocketLang* (or whatever we end up calling the player movement language)
     - *RocketLang* compiler that translate code to movement
  - Phase 1 : refinement to basic functions

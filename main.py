@@ -66,6 +66,7 @@ while running:
                 print("run")
         manager.process_events(event)
     
+    print(player.checkCollision())
     
     manager.update(time_delta)
     manager.draw_ui(screen)

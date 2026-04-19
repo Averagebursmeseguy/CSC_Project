@@ -5,7 +5,7 @@ class Rocket:
         self.grid_pos = list(grid_pos)  # [x, y]
         self.gameMap = gameMap
         # if starting cell is terrain, find a free one
-        if self.gameMap.coords.get(tuple(self.grid_pos)) == "terrain":
+        if self.checkCollision():
             self.grid_pos = self.findEmpty(gameMap)
 
     def parseRL(self, raw):
@@ -14,17 +14,24 @@ class Rocket:
             commandList = command.split(' ')
             name = commandList.pop(0)
             return {"name": name, "args": commandList}
-        return list(map(parseAgain, commands))
+        
+        if raw == '':
+            return [None]
+        else: 
+            return list(map(parseAgain, commands))
     
     def validateRL(self, commandList:list[dict]):
         errorList = []
+        if None in commandList:
+            return errorList
+        
         for i, command in enumerate(commandList):
             line = i+1
             match command['name']:
                 case 'move':
                     args = command['args']
                     if len(args) != 2:
-                        errorList.append(f'Error: line:{line}: move has 2 args, got {len(args)}.')
+                        errorList.append(f'Error: line:{line}: move expected 2 args, got {len(args)}.')
                     elif args[-1].isdecimal() == False:
                         errorList.append(f'Error: line{line}: distance must be a number')
                     elif args[0] not in ['forward', 'backward', 'up', 'down']:
@@ -33,7 +40,7 @@ class Rocket:
                 case 'shoot':
                     args = command['args']
                     if len(args) != 1:
-                        errorList.append(f'Error: line{line}: No direction.')
+                        errorList.append(f'Error: line{line}: shoot expected 1 arg, got {len(args)}')
                     elif args[-1] not in ['forward', 'backward', 'up', 'down']:
                         errorList.append(f'Error: line{line}: cannot shoot in that direction')
 
