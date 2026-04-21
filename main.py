@@ -2,6 +2,7 @@ import pygame
 import pygame_gui
 import map
 import rocket
+import entity
 
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -15,6 +16,7 @@ manager = pygame_gui.UIManager((900, 800))
 gameMap = map.Map(15, 2, 40, screen)
 gameMap.scatterDebris()
 player = rocket.Rocket('./assets/placeholder_rocket.png',(0, 0) , gameMap)
+alice = entity.Entity(True, (2, 6), "./assets/objective.png", gameMap = gameMap)
 
 validateButton = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect(0,0, 100, 50),
@@ -63,15 +65,23 @@ while running:
                     rocketLangterminal.set_text(f"<p><font color=#00FF00>Code executed successfully</font")
 
             elif event.ui_element == runButton:
-                print("run")
+                commands = player.parseRL(codeEntryWindow.get_text())
+                errors = player.validateRL(commands)
+                
+                if errors != []:
+                    rocketLangterminal.set_text(f"<p><font color=#FF0000>{'\n'.join(errors)}</font></p>")
+                else:
+                    rocketLangterminal.set_text(f"<p><font color=#00FF00>Code executed successfully</font")
+                    player.executeRL(commands)
+
         manager.process_events(event)
     
-    print(player.checkCollision())
     
     manager.update(time_delta)
     manager.draw_ui(screen)
     gameMap.drawMap()
     player.draw()
+    alice.draw()
     pygame.display.flip() #renders all the sprites and displays them in window. Don't fuck with this one.
 
 pygame.quit()

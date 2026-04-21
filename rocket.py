@@ -4,9 +4,13 @@ class Rocket:
         self.image = pygame.image.load(image_path).convert_alpha()
         self.grid_pos = list(grid_pos)  # [x, y]
         self.gameMap = gameMap
+        self.RLcommands = {
+            "move": self.move,
+            "shoot": self.shoot
+        }
         # if starting cell is terrain, find a free one
         if self.checkCollision():
-            self.grid_pos = self.findEmpty(gameMap)
+            self.grid_pos = self.findEmpty()
 
     def parseRL(self, raw):
         commands = raw.split("\n")
@@ -49,16 +53,14 @@ class Rocket:
         return errorList
     
     def executeRL(self, commandList:list[dict]):
-        errorList = self.validateRL(commandList)
 
-        if len(errorList) != 0:
-            return errorList
-        else:
-            pass
-                
+        for command in commandList:
+            cmd = self.RLcommands.get(command.get("name"))
+            args = command.get("args")
+            cmd(*args)
 
     def checkCollision(self):
-        if self.gameMap.coords[tuple(self.grid_pos)]['terrain'] == "terrain":
+        if self.gameMap.coords[tuple(self.grid_pos)]['terrain'] !=[]:
             return True
         else:
             return False
@@ -72,6 +74,7 @@ class Rocket:
 
     def move(self, dir:str, distance:int):
         dirs = ['forward', 'backward', 'up', 'down']
+        distance = int(distance)
         if dir not in dirs:
             pass
         else:
@@ -84,6 +87,9 @@ class Rocket:
                     self.grid_pos[1] = (self.grid_pos[1] - distance) % self.gameMap.size
                 case 'down':
                     self.grid_pos[1] = (self.grid_pos[1] + distance) % self.gameMap.size
+
+    def shoot(self, dir):
+        pass
 
     def draw(self):
         view_size = int(self.gameMap.screen.get_height() * 0.9)
