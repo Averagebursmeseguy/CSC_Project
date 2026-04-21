@@ -60,7 +60,8 @@ class Rocket:
             cmd(*args)
 
     def checkCollision(self):
-        if self.gameMap.coords[tuple(self.grid_pos)]['terrain'] !=[]:
+        print(self.gameMap.coords[tuple(self.grid_pos)]['terrain'])
+        if self.gameMap.coords[tuple(self.grid_pos)]['terrain'] != None:
             return True
         else:
             return False
@@ -72,21 +73,35 @@ class Rocket:
                     return [x, y]
         return [0, 0]  # fallback
 
-    def move(self, dir:str, distance:int):
+    def move(self, dir:str, distance:int): #VERY JANKY MOVEMENT SYSTEM. PLEASE FIX
         dirs = ['forward', 'backward', 'up', 'down']
         distance = int(distance)
+
         if dir not in dirs:
             pass
         else:
             match dir:
                 case 'forward':
-                    self.grid_pos[0] = (self.grid_pos[0] + distance) % self.gameMap.size
+                    for i in range(distance):
+                        self.grid_pos[0] = (self.grid_pos[0] + 1) % self.gameMap.size
+                        if self.checkCollision():
+                            break
                 case 'backward':
-                    self.grid_pos[0] = (self.grid_pos[0] - distance) % self.gameMap.size
+                    for i in range(distance):
+                        self.grid_pos[0] = (self.grid_pos[0] - 1) % self.gameMap.size
+                        if self.checkCollision():
+                            break
                 case 'up':
-                    self.grid_pos[1] = (self.grid_pos[1] - distance) % self.gameMap.size
+                    for i in range(distance):
+                        self.grid_pos[1] = (self.grid_pos[1] - 1) % self.gameMap.size
+                        if self.checkCollision:
+                            break
                 case 'down':
-                    self.grid_pos[1] = (self.grid_pos[1] + distance) % self.gameMap.size
+                    for i in range(distance):
+                        self.grid_pos[1] = (self.grid_pos[1] + 1) % self.gameMap.size
+                        if self.checkCollision:
+                            break
+
 
     def shoot(self, dir):
         pass
