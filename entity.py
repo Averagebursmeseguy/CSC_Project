@@ -1,12 +1,17 @@
-import pygame
+import pygame, random
 import map
 class Entity:
-    def __init__(self, friendly:bool, pointCoords:tuple[int, int], sprite:str, gameMap:map.Map):
+    def __init__(self, friendly:bool, sprite:str, gameMap:map.Map):
         self.gameMap = gameMap
         self.friendly = friendly
         self.sprite = pygame.image.load(f'{sprite}').convert_alpha()
-        self.pointCoords = pointCoords
+        self.pointCoords = (None, None)
+        self.scatter()
 
+    def scatter(self):
+        self.pointCoords = (random.randint(0, self.gameMap.size), random.randint(0, self.gameMap.size))
+        while self.gameMap.coords[self.pointCoords]['terrain'] != None:
+            self.pointCoords = (random.randint(0, self.gameMap.size), random.randint(0, self.gameMap.size))
 
     #No idea how code conversion works. It just does. DO NOT TOUCH
     def draw(self):

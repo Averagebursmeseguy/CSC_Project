@@ -8,9 +8,11 @@ class Rocket:
             "move": self.move,
             "shoot": self.shoot
         }
+        self.collided = False
         # if starting cell is terrain, find a free one
-        if self.checkCollision():
+        if self.checkCollision() == True:
             self.grid_pos = self.findEmpty()
+            print(self.grid_pos)
 
     def parseRL(self, raw):
         commands = raw.split("\n")
@@ -27,6 +29,7 @@ class Rocket:
     def validateRL(self, commandList:list[dict]):
         errorList = []
         if None in commandList:
+            print(errorList)
             return errorList
         
         for i, command in enumerate(commandList):
@@ -38,14 +41,14 @@ class Rocket:
                         errorList.append(f'Error: line:{line}: move expected 2 args, got {len(args)}.')
                     elif args[-1].isdecimal() == False:
                         errorList.append(f'Error: line{line}: distance must be a number')
-                    elif args[0] not in ['forward', 'backward', 'up', 'down']:
-                        errorList.append(f'Error: line{line}: unrecognised direction. Can only go forward, backward, up, down.')
+                    elif args[0] not in ['right', 'left', 'up', 'down']:
+                        errorList.append(f'Error: line{line}: unrecognised direction. Can only go right, left, up, down.')
 
                 case 'shoot':
                     args = command['args']
                     if len(args) != 1:
                         errorList.append(f'Error: line{line}: shoot expected 1 arg, got {len(args)}')
-                    elif args[-1] not in ['forward', 'backward', 'up', 'down']:
+                    elif args[-1] not in ['right', 'left', 'up', 'down']:
                         errorList.append(f'Error: line{line}: cannot shoot in that direction')
 
                 case _:
@@ -59,34 +62,37 @@ class Rocket:
             args = command.get("args")
             cmd(*args)
 
+
     def checkCollision(self):
         print(self.gameMap.coords[tuple(self.grid_pos)]['terrain'])
         if self.gameMap.coords[tuple(self.grid_pos)]['terrain'] != None:
+            self.collided = True
             return True
         else:
+            self.collided = False
             return False
 
     def findEmpty(self):
         for y in range(self.gameMap.size):
             for x in range(self.gameMap.size):
-                if self.gameMap.coords.get((x, y)) != "terrain":
+                if self.gameMap.coords[(x, y)]['terrain'] == None:
                     return [x, y]
         return [0, 0]  # fallback
 
     def move(self, dir:str, distance:int): #VERY JANKY MOVEMENT SYSTEM. PLEASE FIX
-        dirs = ['forward', 'backward', 'up', 'down']
+        dirs = ['right', 'left', 'up', 'down']
         distance = int(distance)
 
         if dir not in dirs:
             pass
         else:
             match dir:
-                case 'forward':
+                case 'right':
                     for i in range(distance):
                         self.grid_pos[0] = (self.grid_pos[0] + 1) % self.gameMap.size
                         if self.checkCollision():
                             break
-                case 'backward':
+                case 'left':
                     for i in range(distance):
                         self.grid_pos[0] = (self.grid_pos[0] - 1) % self.gameMap.size
                         if self.checkCollision():
@@ -94,12 +100,12 @@ class Rocket:
                 case 'up':
                     for i in range(distance):
                         self.grid_pos[1] = (self.grid_pos[1] - 1) % self.gameMap.size
-                        if self.checkCollision:
+                        if self.checkCollision():
                             break
                 case 'down':
                     for i in range(distance):
                         self.grid_pos[1] = (self.grid_pos[1] + 1) % self.gameMap.size
-                        if self.checkCollision:
+                        if self.checkCollision():
                             break
 
 

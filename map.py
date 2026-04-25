@@ -13,6 +13,8 @@ class Map():
         for y in range(self.size + 1):
             for x in range(self.size + 1):
                 self.coords[(x, y)] = {'terrain': None, "point": (x, y)}
+
+        
         
 
     def makeDebris(self, root:tuple[int, int]):
