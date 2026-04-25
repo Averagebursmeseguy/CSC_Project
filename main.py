@@ -37,7 +37,35 @@ rocketLangterminal = pygame_gui.elements.UITextBox(
     manager = manager,
     html_text= "rocketLang engine V0.0.1\n ©RocketLang, all rights reserved"
 )
+gameOverPanel = pygame_gui.elements.UIPanel(
+    relative_rect = pygame.Rect((0, 0), (300, 200)),
+    manager = manager, 
+    anchors = {"center": "center"}
+)
 
+gameOverLable = pygame_gui.elements.UILabel(
+    relative_rect = pygame.Rect((0, 0), (300, 100)),
+    manager = manager,
+    text = "Game Over",
+    container = gameOverPanel
+)
+
+retryButton = pygame_gui.elements.UIButton(
+    relative_rect = pygame.Rect((10, 120), (100, 50)),
+    text = "Retry",
+    manager = manager,
+    container = gameOverPanel
+)
+
+exitButton = pygame_gui.elements.UIButton(
+    relative_rect = pygame.Rect((180, 120), (100, 50)),
+    text = "Quit",
+    manager = manager,
+    container = gameOverPanel
+)
+
+gameOverPanel.disable()
+gameOverPanel.hide()
 running = True
 gameOver = False
 while running:
@@ -57,7 +85,7 @@ while running:
 
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
 
-            if codeEntryWindow.get_text() == "":
+            if event.ui_element == validateButton and codeEntryWindow.get_text() == "":
                 rocketLangterminal.set_text(f"<p><font color=#0000FF> Nothing to run </font></p>")
 
             elif event.ui_element == validateButton:
@@ -82,15 +110,17 @@ while running:
                     player.executeRL(commands)
                     if player.collided:
                         print('game over')
+                        gameOverPanel.enable()
+                        gameOverPanel.show()
 
         manager.process_events(event)
     
     
-    manager.update(time_delta)
-    manager.draw_ui(screen)
     gameMap.drawMap()
     player.draw()
     alice.draw()
+    manager.update(time_delta)
+    manager.draw_ui(screen)
     pygame.display.flip()
 
 pygame.quit()
