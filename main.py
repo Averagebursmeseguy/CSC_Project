@@ -14,7 +14,8 @@ manager = pygame_gui.UIManager((900, 800))
 gameMap = map.Map(15, 2, 40, screen)
 gameMap.scatterDebris()
 player = rocket.Rocket('./assets/placeholder_rocket.png',(0, 0) , gameMap)
-alice = entity.Entity(True, "./assets/objective.png", gameMap = gameMap)
+alice = entity.Entity(True, "./assets/objective.png", gameMap, "objective")
+
 
 validateButton = pygame_gui.elements.UIButton(
     relative_rect=pygame.Rect(0,0, 100, 50),
@@ -46,7 +47,7 @@ gameOverPanel = pygame_gui.elements.UIPanel(
 gameOverLable = pygame_gui.elements.UILabel(
     relative_rect = pygame.Rect((0, 0), (300, 100)),
     manager = manager,
-    text = "Game Over",
+    text = "Game Over. You crashed.",
     container = gameOverPanel
 )
 
@@ -64,13 +65,21 @@ exitButton = pygame_gui.elements.UIButton(
     container = gameOverPanel
 )
 
-gameOverPanel.disable()
-gameOverPanel.hide()
+win = False
 running = True
 gameOver = False
 while running:
     time_delta = clock.tick(60) / 1000.0
     screen.fill((50, 50, 50))
+
+    if gameOver:
+        gameOverPanel.enable()
+        gameOverPanel.show()
+
+    elif not gameOver:
+        gameOverPanel.disable()
+        gameOverPanel.hide()
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -109,12 +118,31 @@ while running:
                     rocketLangterminal.set_text(f"<p><font color=#00FF00>Code executed successfully</font")
                     player.executeRL(commands)
                     if player.collided:
-                        print('game over')
-                        gameOverPanel.enable()
-                        gameOverPanel.show()
+                        gameOver = True
+
+            elif event.ui_element == retryButton and win == True:
+                    gameMap = map.Map(15, 2, 40, screen)
+                    gameMap.scatterDebris()
+                    player = rocket.Rocket('./assets/placeholder_rocket.png',(0, 0) , gameMap)
+                    alice = entity.Entity(True, "./assets/objective.png", gameMap, "objective")
+                    gameOver = False
+                    win = False
+
+            elif event.ui_element == retryButton:
+                player = rocket.Rocket('./assets/placeholder_rocket.png',(0, 0) , gameMap)
+                alice = entity.Entity(True, "./assets/objective.png", gameMap, "objective")
+                gameOver = False
+
+            elif event.ui_element == exitButton:
+                running = False
 
         manager.process_events(event)
-    
+
+    if tuple(player.grid_pos) == alice.pointCoords:
+        gameOver = True
+        win = True
+        gameOverLable.set_text('Bravo! You have reached the objective!')
+        retryButton.set_text('Next Sector!')
     
     gameMap.drawMap()
     player.draw()

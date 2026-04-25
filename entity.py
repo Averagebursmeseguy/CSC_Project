@@ -1,11 +1,12 @@
 import pygame, random
 import map
 class Entity:
-    def __init__(self, friendly:bool, sprite:str, gameMap:map.Map):
+    def __init__(self, friendly:bool, sprite:str, gameMap:map.Map, type: str):
         self.gameMap = gameMap
         self.friendly = friendly
         self.sprite = pygame.image.load(f'{sprite}').convert_alpha()
         self.pointCoords = (None, None)
+        self.type = type
         self.scatter()
 
     def scatter(self):
