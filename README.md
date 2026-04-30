@@ -12,6 +12,7 @@
  ```bash
  pip install -r requirements.txt
  ```
+ - Entry point is main.py. To run game, run main.py
 
 # obvious stuff:
  - entry point is main.py
