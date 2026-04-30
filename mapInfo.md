@@ -35,10 +35,9 @@ This is the Pygame.Screen object that the Map() object puts its render pipeline 
 This is the scaling factor for scaling the 256x256 sprite to fit into the grid. The scale factor only works if the sprite is 256x256. Otherwise, adjustments are needed.
 
 ## Part - 2 The renderer:
-The map renderer converts the coords dict stored in Map() to actual screen codes and paints the screen. ~~I wrote this at 3 in the morning and half of its operations involve copious amounts of caffeine, black magic and wondering why I chose to do CS voluntarily.~~ DO NOT MODIFY
+The map renderer converts the coords dict stored in Map() to actual screen codes and paints the screen. DO NOT MODIFY
 
 ### How it works
-~~I have no idea how. Just read the code and hope for the best~~
 The map is rendered on the window in about three steps.
 
 #### Step - 1: Render the map viewport
