@@ -6,7 +6,7 @@ class Map():
         self.density = density
         self.debriSize = debriSize
         self.coords = {}
-        self.terrain_piece = pygame.image.load('assets/terrain.png').convert_alpha()
+        self.terrain_piece = pygame.image.load('./assets/terrain.png').convert_alpha()
         self.screen = screen
         self.scaling = 0
 
