@@ -95,8 +95,15 @@ tutorialPreviousButton = pygame_gui.elements.UIButton(
     text = "Previous slide"
 )
 
+tutorialSlideNumber = pygame_gui.elements.UILabel(
+    relative_rect = pygame.Rect((200, 0), (100, 50)),
+    manager = manager,
+    container = TutorialPanel,
+    text = f"slide {currentIndex + 1} of {len(tutoImages)}"
+)
+
 tutorialSlideshowDisplay = pygame_gui.elements.UIImage(
-    relative_rect=pygame.Rect(0, 0, 700, 400),
+    relative_rect=pygame.Rect(0, 0, 700, 500),
     image_surface = tutoImages[currentIndex],
     anchors = {"center": "center"},
     manager = manager,
@@ -155,17 +162,21 @@ while running:
             elif event.ui_element == tutorialNextButton:
                 try:
                         currentIndex += 1
+                        tutorialSlideNumber.set_text(f"slide {currentIndex + 1} of {len(tutoImages)}")
                         tutorialSlideshowDisplay.set_image(tutoImages[currentIndex])
                 except:
                     currentIndex = 0
+                    tutorialSlideNumber.set_text(f"slide {currentIndex + 1} of {len(tutoImages)}")
                     tutorialSlideshowDisplay.set_image(tutoImages[currentIndex])
 
             elif event.ui_element == tutorialPreviousButton:
                 try:
                         currentIndex += 1
+                        tutorialSlideNumber.set_text(f"slide {currentIndex + 1} of {len(tutoImages)}")
                         tutorialSlideshowDisplay.set_image(tutoImages[currentIndex])
                 except:
                     currentIndex = 0
+                    tutorialSlideNumber.set_text(f"slide {currentIndex + 1} of {len(tutoImages)}")
                     tutorialSlideshowDisplay.set_image(tutoImages[currentIndex])
 
             elif event.ui_element == validateButton:
